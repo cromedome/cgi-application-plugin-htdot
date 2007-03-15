@@ -8,6 +8,7 @@ use Test::Exception;
 BEGIN{ use_ok('CGI::Application'); }
 
 use TestApp;
+#use lib './t';
 
 $ENV{CGI_APP_RETURN_ONLY} = 1;
 
