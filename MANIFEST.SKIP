@@ -6,5 +6,6 @@
 ^MANIFEST\.SKIP$
 CVS
 ^\.cvsignore$
-\.svn$
-\.kpf$
+\.svn
+\.kpf
+\.DS_Store

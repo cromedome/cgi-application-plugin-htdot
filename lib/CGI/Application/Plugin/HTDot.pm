@@ -79,7 +79,7 @@ on what parameters can be passed to C<load_tmpl()>.
 
 sub load_tmpl {
 	my $self = shift;
-	my ($tmpl_file, @extra_params) = @_;
+	my ( $tmpl_file, @extra_params ) = @_;
 
 	# Add tmpl_path to path array if one is set, otherwise add a path arg
 	if (my $tmpl_path = $self->tmpl_path) {
@@ -127,15 +127,19 @@ sub load_tmpl {
         $t = HTML::Template::Pluggable->new_filehandle( $tmpl_file, %ht_params );
     }
 	else {
-        $t = HTML::Template::Pluggable->new_file($tmpl_file, %ht_params);
+        $t = HTML::Template::Pluggable->new_file( $tmpl_file, %ht_params );
     }
 
-    if (keys %tmpl_params) {
-        $t->param(%tmpl_params);
+    if ( keys %tmpl_params ) {
+        $t->param( %tmpl_params );
     }
 
-	# Pass the CGI::Application object to the template
-	$t->param( c => $self ) if $t->query( name => 'c' );
+	# Pass the CGI::Application object to the template (if it's being referenced
+    # somewhere in the template...)
+    my @vars = $t->query;
+    foreach my $var ( @vars ) {
+        $t->param( c => $self ) if $var =~ /^c{1}/;
+    }
 
 	# Give the user back their template
 	return $t;
