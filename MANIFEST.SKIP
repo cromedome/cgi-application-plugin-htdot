@@ -9,3 +9,5 @@ CVS
 \.svn
 \.kpf
 \.DS_Store
+\.git
+^MYMETA.yml$
